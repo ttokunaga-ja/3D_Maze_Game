@@ -1,4 +1,4 @@
-# Javascript-3D-Maze-Game
+# 3D_Maze_Game
 
 Three.js + TypeScript + Vite で実装した 3D 迷路探索ゲームです。Cloudflare Pages での公開を前提に静的サイトとしてビルドします。
 
