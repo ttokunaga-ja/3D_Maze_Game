@@ -289,8 +289,12 @@ export class Game {
       const ep = enemy.group.position;
       const dist = ep.distanceTo(player);
       const inView = dist <= ENEMY_VIEW_RANGE;
-      const visible =
-        inView && !hasWallBetween(this.maze.map, ep.x, ep.z, player.x, player.z);
+      const lineOfSight = !hasWallBetween(this.maze.map, ep.x, ep.z, player.x, player.z);
+      const visible = inView && lineOfSight;
+
+      // Hide the enemy entirely when a wall is between it and the player so its
+      // silhouette and HP bar cannot leak through walls.
+      enemy.group.visible = lineOfSight;
 
       if (visible) {
         enemy.lastSeenPlayerPosition = player.clone();

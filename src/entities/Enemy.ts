@@ -22,7 +22,7 @@ function makeHpSprite(): THREE.Sprite {
   canvas.height = 24;
   const tex = new THREE.CanvasTexture(canvas);
   tex.magFilter = THREE.NearestFilter;
-  const mat = new THREE.SpriteMaterial({ map: tex, depthTest: false, depthWrite: false });
+  const mat = new THREE.SpriteMaterial({ map: tex, depthWrite: false });
   const sprite = new THREE.Sprite(mat);
   sprite.scale.set(BLOCK_SIZE * 0.7, BLOCK_SIZE * 0.14, 1);
   (sprite.userData as { canvas: HTMLCanvasElement; texture: THREE.CanvasTexture }) = {
