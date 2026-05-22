@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>3D Maze Game</title>
+  </head>
+  <body>
+    <canvas id="game-canvas"></canvas>
+
+    <div id="minimap-container">
+      <canvas id="minimap"></canvas>
+    </div>
+
+    <div id="hud-root"></div>
+
+    <div id="controls-hint">
+      <span>W/S：前進・後退</span>
+      <span>A/D：左右旋回</span>
+      <span>Space / 左クリック：攻撃 ／ 壁破壊</span>
+    </div>
+
+    <button id="action-button" type="button" aria-label="Attack / Break">
+      <span>⚔</span>
+    </button>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

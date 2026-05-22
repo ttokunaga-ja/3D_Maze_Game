@@ -1,0 +1,195 @@
+:root {
+  color-scheme: dark;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: #0a0a14;
+  color: #f0f0f0;
+  overflow: hidden;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+#game-canvas {
+  display: block;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  cursor: crosshair;
+}
+
+#minimap-container {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  pointer-events: none;
+}
+
+#minimap {
+  display: block;
+  width: 160px;
+  height: 160px;
+  image-rendering: pixelated;
+}
+
+#hud-root {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  pointer-events: none;
+}
+
+.hud-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
+}
+
+.hud-block {
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  min-width: 140px;
+  justify-content: flex-end;
+}
+
+.hp-block {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  min-width: 200px;
+}
+
+.hp-bar-bg {
+  width: 100%;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.hp-bar-fill {
+  height: 100%;
+  width: 100%;
+  background: #5cff5c;
+  transition: width 0.2s ease, background 0.2s ease;
+}
+
+.hp-text {
+  font-size: 13px;
+  color: #f0f0f0;
+  text-align: right;
+}
+
+.hud-icon {
+  font-size: 16px;
+}
+
+.toast-container {
+  position: fixed;
+  top: 90px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.toast {
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  transform: translateX(0);
+}
+
+.toast.fade {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.hud-flash {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.hud-flash.fade {
+  opacity: 0;
+}
+
+#controls-hint {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 18px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+#action-button {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 130, 60, 0.85);
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  font-size: 32px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+#action-button:active {
+  background: rgba(255, 100, 30, 0.95);
+  transform: scale(0.95);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  #action-button {
+    display: flex;
+  }
+  #controls-hint {
+    display: none;
+  }
+}

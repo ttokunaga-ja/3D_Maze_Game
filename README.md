@@ -1,74 +1,85 @@
 # Javascript-3D-Maze-Game
 
-このリポジトリは、Three.jsを使用した3D迷路ゲームのJavaScript実装です。シンプルな操作で迷路を探索し、ゴールを目指しましょう！
+Three.js + TypeScript + Vite で実装した 3D 迷路探索ゲームです。Cloudflare Pages での公開を前提に静的サイトとしてビルドします。
 
 ## 特徴
 
-- **3D迷路探索:** Three.jsを用いて、リアルな3D空間での迷路探索を体験できます。
-- **ミニマップ:** 現在地と周辺の探索状況を把握できるミニマップ付き。
-- **アイテムと敵:** 迷路内には、ゲームを有利に進めるためのアイテムと、危険な敵が存在します。
-- **シンプルな操作:** キーボードやUIボタンで直感的に操作可能です。
-- **時間制限:** 時間制限内にゴールを目指しましょう。
-- **壁破壊:** アイテムを使って壁を破壊することもできます。
+- **3D 迷路探索**: タンクコントロール（前進・後退・旋回）で迷路を探索
+- **ミニマップ**: 視界範囲が自動で探索済み化、敵・アイテム位置も表示
+- **アイテム 3 種**: 壁破壊ハンマー（能動）、HP 回復ポーション、時間延長砂時計（取得で自動効果）
+- **敵 AI**: 視線が通れば追跡、壁越しは最後に見た位置へ向かう。頭上に HP バー表示
+- **InstancedMesh による描画最適化**: 迷路全体を数 draw call で描画
 
 ## 操作方法
 
-- **キーボード:**
-    - `w` : 前進
-    - `a` : 左移動
-    - `s` : 後退
-    - `d` : 右移動
-    - `j` : ジャンプ
-    - `z` : 攻撃
-    - `e` : 右回転
-    - `q` : 左回転
-    - `x` : 壁破壊
-- **UIボタン:**
-    - `Up` : 前進
-    - `Down` : 後退
-    - `Left` : 左移動
-    - `Right` : 右移動
-    - `Attack` : 攻撃
-    - `Break` : 壁破壊
-- **画面上の回転ボタン:**
-    - `←`：左回転
-    - `→`：右回転
+| キー / 操作 | 効果 |
+|---|---|
+| `W` | 前進（押下中ずっと） |
+| `S` | 後退 |
+| `A` | 左旋回 |
+| `D` | 右旋回 |
+| `Space` / 左クリック / 画面右下のボタン（モバイル） | 視線上の敵を攻撃、敵がいなければ壁を破壊（要 WallBreaker） |
 
 ## ゲームの遊び方
 
-1.  迷路内を探索してゴールを目指します。
-2.  ミニマップを活用し、未探索のエリアを効率よく探索しましょう。
-3.  アイテム(青い球)を拾うと、壁を破壊する能力を得ることができます。
-4.  敵(赤いコーン)に接触するとダメージを受けます。
-5.  制限時間内にゴールに辿り着くことができればゲームクリアです。
+1. 迷路内を探索してゴール（緑タイル）を目指す
+2. アイテムを拾うと効果発動：
+   - 🔨 **WallBreaker**: 所持後、Space で目の前の壁を 1 個破壊
+   - ❤ **HealPotion**: HP 回復（自動、満タン時は拾わない）
+   - ⏱ **TimeBonus**: 残時間 +30 秒（自動）
+3. 敵に接触されるとダメージ
+4. 制限時間内にゴールタイルに到達すればクリア
 
-## 必要なもの
+## 開発
 
-- ブラウザ (Chrome, Firefox, Safariなど)
+```bash
+nvm use            # Node 20
+npm install
+npm run dev        # ローカル開発（HMR）
+npm run typecheck  # TypeScript 型チェック
+npm run build      # 本番ビルド → dist/
+npm run preview    # 本番ビルドのローカル確認
+```
 
-## 使い方
+## デプロイ（Cloudflare Pages）
 
-1.  このリポジトリをクローンまたはダウンロードしてください。
-2.  `Javascript-3D-Maze-Game.html` をブラウザで開いてください。
+リポジトリを Cloudflare Pages に接続し、以下を設定するだけで自動デプロイされます。
+
+| 設定 | 値 |
+|---|---|
+| Framework preset | Vite |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Production branch | `main` |
+| Environment variables | `NODE_VERSION=20` |
+
+- `public/_headers` で `index.html` を `no-cache`、ハッシュ付き `assets/*` を `max-age=31536000, immutable` に分離
+- `three` は独立 chunk として出力され、長期キャッシュが効きます
+- feature ブランチを push すると自動でプレビュー URL が発行されます
 
 ## ファイル構成
 
 ```
-Javascript-3D-Maze-Game/
-├── Javascript-3D-Maze-Game.css       # スタイルシート
-├── Javascript-3D-Maze-Game.js        # メインのJavaScriptファイル
-└── Javascript-3D-Maze-Game.html      # HTMLファイル
+.
+├─ index.html              # エントリ HTML
+├─ public/_headers         # Cloudflare Pages 配信制御
+├─ src/
+│  ├─ main.ts              # エントリ
+│  ├─ Game.ts              # ゲームライフサイクル
+│  ├─ styles.css
+│  ├─ config/constants.ts  # 全チューニング値
+│  ├─ types.ts
+│  ├─ maze/                # 迷路生成（部屋分割アルゴリズム）
+│  ├─ world/MapUtils.ts    # 座標変換と壁判定
+│  ├─ scene/               # Renderer / Lighting / MazeMeshBuilder
+│  ├─ entities/            # Robot / Enemy / Item
+│  ├─ controls/            # InputState / PlayerController
+│  └─ ui/                  # HUD / Minimap
+├─ vite.config.ts
+├─ tsconfig.json
+└─ package.json
 ```
-
-- `Javascript-3D-Maze-Game.css`: ゲームのスタイリングを定義するCSSファイル。
-- `Javascript-3D-Maze-Game.js`: ゲームのロジックとThree.jsによる3D描画を実装するJavaScriptファイル。
-- `Javascript-3D-Maze-Game.html`: ゲームをブラウザで実行するためのHTMLファイル。
-
-## カスタマイズ
-
-- `Javascript-3D-Maze-Game.js` ファイルを編集して、迷路の大きさ、敵やアイテムの配置、ゲームの難易度などを調整できます。
 
 ## ライセンス
 
-このプロジェクトは、[MITライセンス](https://opensource.org/licenses/MIT) の下で公開されています。
-
+[MIT License](https://opensource.org/licenses/MIT)
