@@ -1,8 +1,4 @@
-import {
-  MAP_SIZE,
-  MINIMAP_UPDATE_INTERVAL_MS,
-  MINIMAP_VIEW_RANGE,
-} from '../config/constants';
+import { MAP_SIZE, MINIMAP_UPDATE_INTERVAL_MS, MINIMAP_VIEW_RANGE } from '../config/constants';
 import type { MapGrid } from '../types';
 import { worldToCell } from '../world/MapUtils';
 
@@ -35,10 +31,16 @@ export class Minimap {
     const playerZ = worldToCell(playerWorldZ);
 
     // 視界内を常時 explored 化
-    for (let y = Math.max(0, playerZ - MINIMAP_VIEW_RANGE);
-         y < Math.min(MAP_SIZE, playerZ + MINIMAP_VIEW_RANGE); y++) {
-      for (let x = Math.max(0, playerX - MINIMAP_VIEW_RANGE);
-           x < Math.min(MAP_SIZE, playerX + MINIMAP_VIEW_RANGE); x++) {
+    for (
+      let y = Math.max(0, playerZ - MINIMAP_VIEW_RANGE);
+      y < Math.min(MAP_SIZE, playerZ + MINIMAP_VIEW_RANGE);
+      y++
+    ) {
+      for (
+        let x = Math.max(0, playerX - MINIMAP_VIEW_RANGE);
+        x < Math.min(MAP_SIZE, playerX + MINIMAP_VIEW_RANGE);
+        x++
+      ) {
         const dx = x - playerX;
         const dz = y - playerZ;
         if (dx * dx + dz * dz <= MINIMAP_VIEW_RANGE * MINIMAP_VIEW_RANGE) {

@@ -1,11 +1,5 @@
 import * as THREE from 'three';
-import {
-  BLOCK_INITIAL_HP,
-  BLOCK_SIZE,
-  FLOOR_Y,
-  MAP_SIZE,
-  WALL_HEIGHT,
-} from '../config/constants';
+import { BLOCK_INITIAL_HP, BLOCK_SIZE, FLOOR_Y, MAP_SIZE, WALL_HEIGHT } from '../config/constants';
 import type { MapGrid } from '../types';
 import { cellToWorld } from '../world/MapUtils';
 

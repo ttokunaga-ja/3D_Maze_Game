@@ -12,8 +12,16 @@ export function createRobot(): Robot {
   const group = new THREE.Group();
   const scale = BLOCK_SIZE / 40;
 
-  const bodyMat = new THREE.MeshStandardMaterial({ color: 0x00cfd1, roughness: 0.8, metalness: 0.2 });
-  const headMat = new THREE.MeshStandardMaterial({ color: 0xeac28b, roughness: 0.8, metalness: 0.1 });
+  const bodyMat = new THREE.MeshStandardMaterial({
+    color: 0x00cfd1,
+    roughness: 0.8,
+    metalness: 0.2,
+  });
+  const headMat = new THREE.MeshStandardMaterial({
+    color: 0xeac28b,
+    roughness: 0.8,
+    metalness: 0.1,
+  });
   const eyeMat = new THREE.MeshStandardMaterial({ color: 0x000000 });
   const earMat = new THREE.MeshStandardMaterial({ color: 0xffd700, roughness: 0.6 });
   const armMat = new THREE.MeshStandardMaterial({ color: 0xfacd2e, roughness: 0.7 });

@@ -64,10 +64,7 @@ function buildHealPotion(): THREE.Group {
     roughness: 0.1,
     metalness: 0.2,
   });
-  const flask = new THREE.Mesh(
-    new THREE.SphereGeometry(BLOCK_SIZE * 0.18, 16, 12),
-    glassMat,
-  );
+  const flask = new THREE.Mesh(new THREE.SphereGeometry(BLOCK_SIZE * 0.18, 16, 12), glassMat);
   flask.position.y = -BLOCK_SIZE * 0.04;
   g.add(flask);
   const neck = new THREE.Mesh(

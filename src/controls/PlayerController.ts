@@ -1,9 +1,5 @@
 import * as THREE from 'three';
-import {
-  BLOCK_SIZE,
-  MOVE_SPEED,
-  ROTATE_SPEED,
-} from '../config/constants';
+import { BLOCK_SIZE, MOVE_SPEED, ROTATE_SPEED } from '../config/constants';
 import type { MapGrid } from '../types';
 import { canStandAtWorld } from '../world/MapUtils';
 import type { InputState } from './InputState';

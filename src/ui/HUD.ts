@@ -35,8 +35,7 @@ export class HUD {
   update(hp: number, timeRemaining: number, inventory: Inventory): void {
     const ratio = Math.max(0, Math.min(1, hp / MAX_HP));
     this.hpBar.style.width = `${ratio * 100}%`;
-    this.hpBar.style.background =
-      ratio > 0.5 ? '#5cff5c' : ratio > 0.25 ? '#ffd44c' : '#ff5c5c';
+    this.hpBar.style.background = ratio > 0.5 ? '#5cff5c' : ratio > 0.25 ? '#ffd44c' : '#ff5c5c';
     this.hpText.textContent = `HP ${Math.max(0, Math.ceil(hp))}/${MAX_HP}`;
     const mins = Math.max(0, Math.floor(timeRemaining / 60));
     const secs = Math.max(0, Math.floor(timeRemaining % 60));
@@ -56,9 +55,12 @@ export class HUD {
       expiresAt: performance.now() + durationMs,
     };
     this.toasts.push(message);
-    setTimeout(() => {
-      div.classList.add('fade');
-    }, Math.max(0, durationMs - 250));
+    setTimeout(
+      () => {
+        div.classList.add('fade');
+      },
+      Math.max(0, durationMs - 250),
+    );
     setTimeout(() => {
       div.remove();
       this.toasts.shift();

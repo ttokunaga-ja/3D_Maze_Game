@@ -26,12 +26,7 @@ import {
 import { InputState } from './controls/InputState';
 import { PlayerController } from './controls/PlayerController';
 import { animateLegs, createRobot, type Robot } from './entities/Robot';
-import {
-  createEnemy,
-  setEnemyState,
-  updateHpBar,
-  type Enemy,
-} from './entities/Enemy';
+import { createEnemy, setEnemyState, updateHpBar, type Enemy } from './entities/Enemy';
 import { createItem, updateItemAnimation, type ItemEntity } from './entities/Item';
 import { generateMaze, type MazeResult } from './maze/MazeGenerator';
 import { buildMazeMeshes, type MazeMeshHandle } from './scene/MazeMeshBuilder';
@@ -118,13 +113,10 @@ export class Game {
   private spawnRobot(): void {
     this.robot = createRobot();
     const start = this.maze.startArea.room;
-    const spawn = this.findFloorCellIn(start.left, start.top, start.right, start.bottom)
-      ?? this.findAnyFloorCell();
-    this.robot.group.position.set(
-      cellToWorld(spawn.x),
-      PLAYER_EYE_Y,
-      cellToWorld(spawn.z),
-    );
+    const spawn =
+      this.findFloorCellIn(start.left, start.top, start.right, start.bottom) ??
+      this.findAnyFloorCell();
+    this.robot.group.position.set(cellToWorld(spawn.x), PLAYER_EYE_Y, cellToWorld(spawn.z));
     this.robot.group.rotation.y = 0;
     this.ctx.scene.add(this.robot.group);
 
@@ -143,10 +135,7 @@ export class Game {
   ): { x: number; z: number } | null {
     const cx = Math.floor((left + right) / 2);
     const cz = Math.floor((top + bottom) / 2);
-    if (
-      cx >= 0 && cx < MAP_SIZE && cz >= 0 && cz < MAP_SIZE &&
-      this.maze.map[cx][cz] === 0
-    ) {
+    if (cx >= 0 && cx < MAP_SIZE && cz >= 0 && cz < MAP_SIZE && this.maze.map[cx][cz] === 0) {
       return { x: cx, z: cz };
     }
     for (let z = top; z < bottom; z++) {
@@ -239,15 +228,10 @@ export class Game {
     for (const it of this.items) updateItemAnimation(it, elapsed);
 
     this.hud.update(this.hp, this.timeRemaining, this.inventory);
-    this.minimap.draw(
-      this.maze.map,
-      this.robot.group.position.x,
-      this.robot.group.position.z,
-      {
-        enemies: this.enemies.map((e) => ({ x: e.group.position.x, z: e.group.position.z })),
-        items: this.items.map((i) => ({ x: i.group.position.x, z: i.group.position.z })),
-      },
-    );
+    this.minimap.draw(this.maze.map, this.robot.group.position.x, this.robot.group.position.z, {
+      enemies: this.enemies.map((e) => ({ x: e.group.position.x, z: e.group.position.z })),
+      items: this.items.map((i) => ({ x: i.group.position.x, z: i.group.position.z })),
+    });
 
     this.ctx.renderer.render(this.ctx.scene, this.ctx.camera);
   };
@@ -273,9 +257,7 @@ export class Game {
     const lookAt = this.robot.group.position
       .clone()
       .add(
-        this.controller
-          .getForwardDirection(new THREE.Vector3())
-          .multiplyScalar(CAMERA_LOOK_AHEAD),
+        this.controller.getForwardDirection(new THREE.Vector3()).multiplyScalar(CAMERA_LOOK_AHEAD),
       );
     lookAt.y = this.robot.group.position.y + CAMERA_HEIGHT * 0.35;
     this.ctx.camera.lookAt(lookAt);
@@ -482,11 +464,7 @@ export class Game {
     this.finished = true;
     setTimeout(() => {
       const msg =
-        result === 'win'
-          ? 'Game Clear!'
-          : result === 'lose'
-            ? 'Game Over...'
-            : 'Time Up!';
+        result === 'win' ? 'Game Clear!' : result === 'lose' ? 'Game Over...' : 'Time Up!';
       window.alert(msg);
       window.location.reload();
     }, 50);

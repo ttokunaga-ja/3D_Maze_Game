@@ -12,12 +12,12 @@ Three.js + TypeScript + Vite で実装した 3D 迷路探索ゲームです。Cl
 
 ## 操作方法
 
-| キー / 操作 | 効果 |
-|---|---|
-| `W` | 前進（押下中ずっと） |
-| `S` | 後退 |
-| `A` | 左旋回 |
-| `D` | 右旋回 |
+| キー / 操作                                         | 効果                                                       |
+| --------------------------------------------------- | ---------------------------------------------------------- |
+| `W`                                                 | 前進（押下中ずっと）                                       |
+| `S`                                                 | 後退                                                       |
+| `A`                                                 | 左旋回                                                     |
+| `D`                                                 | 右旋回                                                     |
 | `Space` / 左クリック / 画面右下のボタン（モバイル） | 視線上の敵を攻撃、敵がいなければ壁を破壊（要 WallBreaker） |
 
 ## ゲームの遊び方
@@ -45,15 +45,15 @@ npm run preview    # 本番ビルドのローカル確認
 
 `main` への push で GitHub Actions が `dist/` を Cloudflare Pages へ direct upload します。
 
-| 設定 | 値 |
-|---|---|
-| Cloudflare Pages project | `3d-maze-game` |
-| Production URL | `https://3dmazegame.takumi-tokunaga.com/` |
-| Fallback URL | `https://3d-maze-game.pages.dev/` |
-| Build command | `npm run build` |
-| Build output directory | `dist/` |
-| GitHub Actions Node.js | `22` |
-| GitHub Actions secrets | `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` |
+| 設定                     | 値                                              |
+| ------------------------ | ----------------------------------------------- |
+| Cloudflare Pages project | `3d-maze-game`                                  |
+| Production URL           | `https://3dmazegame.takumi-tokunaga.com/`       |
+| Fallback URL             | `https://3d-maze-game.pages.dev/`               |
+| Build command            | `npm run build`                                 |
+| Build output directory   | `dist/`                                         |
+| GitHub Actions Node.js   | `22`                                            |
+| GitHub Actions secrets   | `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` |
 
 - `public/_headers` で `index.html` を `no-cache`、ハッシュ付き `assets/*` を `max-age=31536000, immutable` に分離
 - `three` は独立 chunk として出力され、長期キャッシュが効きます
