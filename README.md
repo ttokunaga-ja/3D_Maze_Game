@@ -52,6 +52,7 @@ npm run preview    # 本番ビルドのローカル確認
 | Fallback URL | `https://3d-maze-game.pages.dev/` |
 | Build command | `npm run build` |
 | Build output directory | `dist/` |
+| GitHub Actions Node.js | `22` |
 | GitHub Actions secrets | `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` |
 
 - `public/_headers` で `index.html` を `no-cache`、ハッシュ付き `assets/*` を `max-age=31536000, immutable` に分離
