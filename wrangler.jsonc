@@ -1,0 +1,5 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "3d-maze-game",
+  "pages_build_output_dir": "dist"
+}

@@ -43,19 +43,20 @@ npm run preview    # 本番ビルドのローカル確認
 
 ## デプロイ（Cloudflare Pages）
 
-リポジトリを Cloudflare Pages に接続し、以下を設定するだけで自動デプロイされます。
+`main` への push で GitHub Actions が `dist/` を Cloudflare Pages へ direct upload します。
 
 | 設定 | 値 |
 |---|---|
-| Framework preset | Vite |
+| Cloudflare Pages project | `3d-maze-game` |
+| Production URL | `https://3dmazegame.takumi-tokunaga.com/` |
+| Fallback URL | `https://3d-maze-game.pages.dev/` |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
-| Production branch | `main` |
-| Environment variables | `NODE_VERSION=20` |
+| Build output directory | `dist/` |
+| GitHub Actions secrets | `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_API_TOKEN` |
 
 - `public/_headers` で `index.html` を `no-cache`、ハッシュ付き `assets/*` を `max-age=31536000, immutable` に分離
 - `three` は独立 chunk として出力され、長期キャッシュが効きます
-- feature ブランチを push すると自動でプレビュー URL が発行されます
+- workflow は `npm ci`、`npm run typecheck`、`npm run build` を通してから `npx wrangler@latest pages deploy dist --project-name 3d-maze-game` を実行します
 
 ## ファイル構成
 
