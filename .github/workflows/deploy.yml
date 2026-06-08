@@ -41,7 +41,7 @@ jobs:
 
       - name: Deploy
         run: >
-          npx wrangler@latest pages deploy dist
+          npx wrangler@4.98.0 pages deploy dist
           --project-name 3d-maze-game
           --branch "$GITHUB_REF_NAME"
           --commit-hash "$GITHUB_SHA"
